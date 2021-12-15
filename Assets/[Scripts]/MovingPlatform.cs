@@ -7,18 +7,21 @@ public class MovingPlatform : MonoBehaviour
     public bool isUpDown;
     public float movingSpeed;
     public float amplitude;
+    public AudioClip audioShrink;
+    public AudioClip audioShrinkBack;
+    AudioSource audioSource;
     Vector2 startPosition;
     Vector3 defaultScale = new Vector3(1, 1, 1);
 
     Rigidbody2D rb;
 
-    public float changespeed = 1;
-    Vector3 temp;
+ 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
+        this.audioSource = GetComponent<AudioSource>();
         //defaultScale = transform.localScale;
     }
 
@@ -39,7 +42,8 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player") && collision.gameObject.GetComponent<PlayerBehaviour>().isGrounded)
         {
-           // collision.collider.transform.SetParent(transform);
+            // collision.collider.transform.SetParent(transform);
+            PlaySound("SHRINK");
             defaultScale = transform.localScale;
             Vector3 scale = defaultScale;
             scale.x = scale.x * 0.9f;
@@ -66,6 +70,26 @@ public class MovingPlatform : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
+        PlaySound("SHRINKBACK");
         transform.localScale = new Vector3(1, 1, 1);
+
+        yield return new WaitForSeconds(2);
+
+    }
+
+
+
+    void PlaySound(string action)
+    {
+        switch (action)
+        {
+            case "SHRINK":
+                audioSource.clip = audioShrink;
+                break;
+            case "SHRINKBACK":
+                audioSource.clip = audioShrinkBack;
+                break;
+        }
+        audioSource.Play();
     }
 }
