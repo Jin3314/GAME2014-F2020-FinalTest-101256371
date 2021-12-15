@@ -24,14 +24,14 @@ public class MovingPlatform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /* if (isUpDown)
+        if (isUpDown)
         {
             rb.transform.position = new Vector2(startPosition.x, startPosition.y + amplitude * Mathf.Sin(Time.time * movingSpeed));
         }
         else
         {
             rb.transform.position = new Vector2(startPosition.x + amplitude * Mathf.Sin(Time.time * movingSpeed), startPosition.y);
-        }*/
+        }
 
     }
 
